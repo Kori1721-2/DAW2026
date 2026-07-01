@@ -1,0 +1,64 @@
+.proveedor-container{
+    background:#fff;
+    padding:20px !important;
+    border-radius:5px !important;
+    box-shadow:0 1px 4px rgba(0,0,0,.15) !important;
+    width:90% !important;
+    max-width:1400px !important;
+    margin:30px auto 0 auto !important;
+}
+
+.proveedor-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    width:100%;
+}
+
+.proveedor-header h3{
+    margin:0;
+    color:#333;
+    font-size:30px;
+    font-weight:600;
+}
+
+.tabla-proveedor{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    font-size:14px;
+}
+
+.tabla-proveedor th{
+    background:#343a40;
+    color:#fff;
+    padding:12px;
+    text-align:center !important;
+    border:1px solid #9ba0a3 !important;
+    white-space:nowrap;
+}
+
+.tabla-proveedor td{
+    border:1px solid #9ba0a3 !important;
+    padding:12px;
+    text-align:center !important;
+    vertical-align:middle !important;
+    color:#000;
+}
+
+.tabla-proveedor tbody tr:hover{
+    background:#f8f9fa;
+}
+
+@media (max-width:1200px){
+    .proveedor-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .tabla-proveedor{
+        min-width:900px;
+    }
+}
