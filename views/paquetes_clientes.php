@@ -31,7 +31,8 @@ $paquetes = $conexion->query("
             background: linear-gradient(135deg, #d4af37, #f7d96b);
         }
         .img-paquete {
-            height: 220px;
+            width: 350px;
+            height: 340px;
             object-fit: cover;
         }
         .whatsapp-btn {

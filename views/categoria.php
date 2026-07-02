@@ -81,7 +81,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                             <?php if (!empty($row['imagen'])): ?>
                                 <img src="../img/categoria/<?php echo htmlspecialchars($row['imagen']); ?>"
                                     alt="<?php echo htmlspecialchars($row['nombre']); ?>"
-                                    style="width:60px;height:60px;object-fit:cover;border-radius:4px;">
+                                    style="width:450px;height:150px;object-fit:cover;border-radius:4px;">
                             <?php else: ?>
                                 <span class="text-muted">—</span>
                             <?php endif; ?>
