@@ -107,7 +107,7 @@ $paquetes = $conexion->query("
                                 <span class="precio-badge text-gray-800 font-bold text-lg px-4 py-2 rounded-lg">
                                     S/. <?php echo number_format($p['costo_base'], 2); ?>
                                 </span>
-                                <a href="https://wa.me/519XXXXXXXX?text=Hola,%20quiero%20información%20sobre%20el%20paquete:%20<?php echo urlencode($p['nombre']); ?>"
+                                <a href="https://wa.me/51954715090?text=Hola,%20quiero%20información%20sobre%20el%20paquete:%20<?php echo urlencode($p['nombre']); ?>"
                                    target="_blank"
                                    class="whatsapp-btn text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium">
                                     <i class="fab fa-whatsapp text-lg"></i> Consultar
@@ -127,15 +127,15 @@ $paquetes = $conexion->query("
             <div class="flex flex-wrap justify-center gap-8">
                 <div class="flex items-center gap-3">
                     <i class="fas fa-phone-alt text-amber-400 text-xl"></i>
-                    <span>(01) 234-5678</span>
+                    <span>(01) 239-1206</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <i class="fab fa-whatsapp text-amber-400 text-xl"></i>
-                    <span>999 888 777</span>
+                    <span>954 715 090</span>
                 </div>
                 <div class="flex items-center gap-3">
                     <i class="fas fa-map-marker-alt text-amber-400 text-xl"></i>
-                    <span>Av. Ejemplo 123, Huacho</span>
+                    <span>Av. Francisco Vidal 730, Huacho</span>
                 </div>
             </div>
         </div>

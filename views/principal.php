@@ -51,7 +51,7 @@
         <a href="principal.php?vista=usuarios"><i class="fas fa-user-tie mr-2"></i> Usuarios</a>
         <a href="principal.php?vista=reportes"><i class="fas fa-chart-column mr-2"></i> Reportes</a>
         <a href="principal.php?vista=configuracion"><i class="fas fa-cogs mr-2"></i> Configuración</a>
-        <a href="principal.php?vista=paquetes_clientes" target="_blank" style="border-top: 1px solid #555; margin-top: 5px;">
+        <a href="paquetes_clientes.php" target="_blank" style="border-top: 1px solid #555; margin-top: 5px;">
             <i class="fas fa-star mr-2" style="color: #ffc107;"></i> Ver Paquetes (Clientes)
         </a>
         <!--<a href="#" data-bs-toggle="modal" data-bs-target="#modalCerrarSesion"><i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión</a>-->
