@@ -1,0 +1,134 @@
+.usuarios-container{
+    background:#fff;
+    padding:20px !important;
+    border-radius:5px !important;
+    box-shadow:0 1px 4px rgba(0,0,0,.15) !important;
+    width:90% !important;
+    max-width:1400px !important;
+    margin:30px auto 0 auto !important;
+}
+
+.usuarios-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    width:100%;
+}
+
+.usuarios-header h3{
+    margin:0;
+    color:#333;
+    font-size:30px;
+    font-weight:600;
+}
+
+.tabla-responsive{
+    width:100%;
+    overflow-x:auto;
+}
+
+.tabla-usuarios{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    font-size:14px;
+}
+
+.tabla-usuarios th{
+    background:#343a40;
+    color:#fff;
+    padding:12px;
+    text-align:center !important;
+    border:1px solid #9ba0a3 !important;
+    white-space:nowrap;
+}
+
+.tabla-usuarios td{
+    border:1px solid #9ba0a3 !important;
+    padding:12px;
+    text-align:center !important;
+    vertical-align:middle !important;
+    color:#000;
+}
+
+.tabla-usuarios tbody tr:hover{
+    background:#f8f9fa;
+}
+
+.btn-agregar{
+    background:#28a745;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:4px;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-agregar:hover{
+    background:#218838;
+    color:#fff;
+    text-decoration:none;
+}
+
+.btn-editar{
+    width:34px;
+    height:34px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:#ffc107;
+    color:#000;
+    border-radius:4px;
+    text-decoration:none;
+    margin-right:3px;
+    transition:.3s;
+}
+
+.btn-editar:hover{
+    background:#e0a800;
+    color:#000;
+    text-decoration:none;
+}
+
+.btn-eliminar{
+    width:34px;
+    height:34px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:#c71515;
+    color:#fff;
+    border-radius:4px;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.btn-restaurar{
+    width:34px;
+    height:34px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:#22b4ee;
+    color:#ffffff;
+    border-radius:4px;
+    text-decoration:none;
+    margin-right:3px;
+    transition:.3s;
+}
+
+@media (max-width:1200px){
+
+    .producto-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .tabla-usuarios{
+        min-width:1200px;
+    }
+
+}

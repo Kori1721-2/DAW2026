@@ -1,0 +1,237 @@
+/* =========================
+   ANIMACIONES GLOBALES
+   ========================= */
+
+/* MODALES: entrada con slide + scale */
+.modal.fade .modal-dialog {
+    transition: transform .3s ease-out, opacity .3s ease-out;
+    transform: translateY(-60px) scale(.92);
+    opacity: 0;
+}
+
+.modal.show .modal-dialog {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.modal.fade .modal-backdrop {
+    transition: opacity .3s ease;
+}
+
+/* ALERTAS: entrada desde la derecha */
+.alert {
+    animation: slideInRight .4s ease forwards;
+    position: relative;
+}
+
+.alert.alert-hiding {
+    animation: slideOutRight .4s ease forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+        max-height: 200px;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+/* FILAS DE TABLA: aparicion escalonada */
+.tabla-productos tbody tr,
+.tabla-usuarios tbody tr,
+.tabla-almacen tbody tr,
+.tabla-stock tbody tr,
+.tabla-categoria tbody tr,
+.tabla-proveedor tbody tr,
+.tabla-servicio tbody tr,
+.tabla-orden-servicio tbody tr,
+.tabla-movimiento tbody tr {
+    animation: fadeInUp .35s ease forwards;
+    opacity: 0;
+}
+
+.tabla-productos tbody tr:nth-child(1),
+.tabla-usuarios tbody tr:nth-child(1),
+.tabla-almacen tbody tr:nth-child(1),
+.tabla-stock tbody tr:nth-child(1),
+.tabla-categoria tbody tr:nth-child(1),
+.tabla-proveedor tbody tr:nth-child(1),
+.tabla-servicio tbody tr:nth-child(1),
+.tabla-orden-servicio tbody tr:nth-child(1),
+.tabla-movimiento tbody tr:nth-child(1) { animation-delay: .05s; }
+
+.tabla-productos tbody tr:nth-child(2),
+.tabla-usuarios tbody tr:nth-child(2),
+.tabla-almacen tbody tr:nth-child(2),
+.tabla-stock tbody tr:nth-child(2),
+.tabla-categoria tbody tr:nth-child(2),
+.tabla-proveedor tbody tr:nth-child(2),
+.tabla-servicio tbody tr:nth-child(2),
+.tabla-orden-servicio tbody tr:nth-child(2),
+.tabla-movimiento tbody tr:nth-child(2) { animation-delay: .1s; }
+
+.tabla-productos tbody tr:nth-child(3),
+.tabla-usuarios tbody tr:nth-child(3),
+.tabla-almacen tbody tr:nth-child(3),
+.tabla-stock tbody tr:nth-child(3),
+.tabla-categoria tbody tr:nth-child(3),
+.tabla-proveedor tbody tr:nth-child(3),
+.tabla-servicio tbody tr:nth-child(3),
+.tabla-orden-servicio tbody tr:nth-child(3),
+.tabla-movimiento tbody tr:nth-child(3) { animation-delay: .15s; }
+
+.tabla-productos tbody tr:nth-child(4),
+.tabla-usuarios tbody tr:nth-child(4),
+.tabla-almacen tbody tr:nth-child(4),
+.tabla-stock tbody tr:nth-child(4),
+.tabla-categoria tbody tr:nth-child(4),
+.tabla-proveedor tbody tr:nth-child(4),
+.tabla-servicio tbody tr:nth-child(4),
+.tabla-orden-servicio tbody tr:nth-child(4),
+.tabla-movimiento tbody tr:nth-child(4) { animation-delay: .2s; }
+
+.tabla-productos tbody tr:nth-child(5),
+.tabla-usuarios tbody tr:nth-child(5),
+.tabla-almacen tbody tr:nth-child(5),
+.tabla-stock tbody tr:nth-child(5),
+.tabla-categoria tbody tr:nth-child(5),
+.tabla-proveedor tbody tr:nth-child(5),
+.tabla-servicio tbody tr:nth-child(5),
+.tabla-orden-servicio tbody tr:nth-child(5),
+.tabla-movimiento tbody tr:nth-child(5) { animation-delay: .25s; }
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* CARDS: fade-in + upward */
+.card {
+    animation: cardFadeIn .5s ease forwards;
+}
+
+@keyframes cardFadeIn {
+    from {
+        transform: translateY(15px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* BOTONES: hover sutil */
+.btn-agregar,
+.btn-editar,
+.btn-eliminar,
+.btn-restaurar {
+    transition: transform .2s ease, box-shadow .2s ease !important;
+}
+
+.btn-agregar:hover,
+.btn-editar:hover,
+.btn-eliminar:hover,
+.btn-restaurar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,.2);
+}
+
+.btn-agregar:active,
+.btn-editar:active,
+.btn-eliminar:active,
+.btn-restaurar:active {
+    transform: translateY(0);
+}
+
+/* BADGES: pulso sutil al aparecer */
+.badge {
+    animation: badgePop .35s ease forwards;
+}
+
+@keyframes badgePop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* SIDEBAR: indicador activo animado */
+.sidebar a {
+    transition: all .3s ease;
+}
+
+.sidebar a:hover i {
+    animation: iconBounce .4s ease;
+}
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(4px);
+    }
+}
+
+/* PAGINACION: hover */
+.pagination-link {
+    transition: transform .2s ease, background .2s ease !important;
+}
+
+.pagination-link:hover {
+    transform: scale(1.1);
+}
+
+/* MODAL HEADERS: barra de color animada */
+.modal-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255,255,255,.3);
+    transform: translateX(-100%);
+    transition: transform .4s ease;
+}
+
+.modal.show .modal-header::after {
+    transform: translateX(0);
+}
