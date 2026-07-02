@@ -126,7 +126,7 @@ switch ($tabla) {
     case 'orden_servicio':
         $titulo = 'Reporte de Órdenes de Servicio';
         $stmt = $conexion->query("
-            SELECT o.id_orden AS codigo, s.nombre AS servicio, o.fecha, o.cliente,
+            SELECT o.id_orden AS codigo, s.nombre AS paquete, o.fecha, o.cliente,
                    o.estado, o.observaciones
             FROM orden_servicio o
             INNER JOIN servicio s ON o.id_servicio = s.id_servicio
@@ -185,8 +185,8 @@ $tablasDisponibles = [
     'almacen' => 'Almacenes',
     'stock' => 'Stock',
     'movimiento' => 'Movimientos',
-    'orden_servicio' => 'Órdenes de Servicio',
-    'servicio' => 'Servicios'
+    'orden_servicio' => 'Órdenes de Paquetes',
+    'servicio' => 'Paquetes'
 ];
 ?>
 <style>

@@ -29,29 +29,29 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     <?php if (isset($_SESSION['mensaje'])): ?>
         <?php if ($_SESSION['mensaje'] == 'agregado'): ?>
             <div class="alert alert-success alert-dismissible fade show" style="color: black;" role="alert">
-                Servicio agregado correctamente.
+                Paquete agregado correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'editado'): ?>
             <div class="alert alert-primary alert-dismissible fade show" style="color: black;" role="alert">
-                Servicio actualizado correctamente.
+                Paquete actualizado correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'eliminado'): ?>
             <div class="alert alert-danger alert-dismissible fade show" style="color: black;" role="alert">
-                Servicio desactivado correctamente.
+                Paquete desactivado correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'reactivado'): ?>
             <div class="alert alert-primary alert-dismissible fade show" style="color: black;" role="alert">
-                Servicio activado correctamente.
+                Paquete activado correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
         <?php unset($_SESSION['mensaje']); ?>
     <?php endif; ?>
     <div class="servicio-header">
-        <h3>Listado de Servicios</h3>
+        <h3>Listado de Paquetes</h3>
         <a class="btn-agregar"
             data-bs-toggle="modal"
             data-bs-target="#modalAgregar">
@@ -113,7 +113,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header bg-warning text-white">
-                                    <h5 class="modal-title" style="color:black;">Editar Servicio</h5>
+                                    <h5 class="modal-title" style="color:black;">Editar Paquete</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
@@ -176,7 +176,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <p>¿Desea desactivar el servicio?</p>
+                                    <p>¿Desea desactivar el paquete?</p>
                                     <h5 style="color: black;"><?php echo htmlspecialchars($row['nombre']); ?></h5>
                                 </div>
                                 <div class="modal-footer">
@@ -208,7 +208,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <p>¿Desea volver a activar el servicio?</p>
+                                    <p>¿Desea volver a activar el paquete?</p>
                                     <h5 style="color: black;"><?php echo htmlspecialchars($row['nombre']); ?></h5>
                                 </div>
                                 <div class="modal-footer">
@@ -240,14 +240,14 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
         <?php if ($pagina > 1): ?>
             <a class="pagination-previous"
                 style="color:black; text-decoration:none;"
-                href="principal.php?vista=servicio&pagina=<?php echo $pagina - 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                href="principal.php?vista=paquete&pagina=<?php echo $pagina - 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
                 Anterior
             </a>
         <?php endif; ?>
         <?php if ($pagina < $totalPaginas): ?>
             <a class="pagination-next"
                 style="color:black; text-decoration:none;"
-                href="principal.php?vista=servicio&pagina=<?php echo $pagina + 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                href="principal.php?vista=paquete&pagina=<?php echo $pagina + 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
                 Siguiente
             </a>
         <?php endif; ?>
@@ -256,7 +256,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                 <li>
                     <a class="pagination-link <?php echo ($i == $pagina) ? 'is-current' : ''; ?>"
                         style="color:black; text-decoration: none;"
-                        href="principal.php?vista=servicio&pagina=<?php echo $i; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                        href="principal.php?vista=paquete&pagina=<?php echo $i; ?>&limite=<?php echo $registrosPorPagina; ?>">
                         <?php echo $i; ?>
                     </a>
                 </li>
@@ -270,7 +270,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" style="color:black;">Agregar Servicio</h5>
+                <h5 class="modal-title" style="color:black;">Agregar Paquete</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -304,7 +304,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            Guardar Servicio
+                            Guardar Paquete
                         </button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                             Cerrar

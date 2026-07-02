@@ -67,12 +67,12 @@ switch ($tabla) {
         break;
     case 'orden_servicio':
         $titulo = 'Reporte de Órdenes de Servicio';
-        $stmt = $conexion->query("SELECT o.id_orden AS codigo, s.nombre AS servicio, o.fecha, o.cliente, o.estado, o.observaciones FROM orden_servicio o INNER JOIN servicio s ON o.id_servicio = s.id_servicio ORDER BY o.fecha DESC");
+        $stmt = $conexion->query("SELECT o.id_orden AS codigo, s.nombre AS paquete, o.fecha, o.cliente, o.estado, o.observaciones FROM orden_servicio o INNER JOIN servicio s ON o.id_servicio = s.id_servicio ORDER BY o.fecha DESC");
         $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $columnas = ['Código', 'Servicio', 'Fecha', 'Cliente', 'Estado', 'Observaciones'];
+        $columnas = ['Código', 'Paquete', 'Fecha', 'Cliente', 'Estado', 'Observaciones'];
         break;
     case 'servicio':
-        $titulo = 'Reporte de Servicios';
+        $titulo = 'Reporte de Paquetes';
         $stmt = $conexion->query("SELECT id_servicio AS codigo, nombre, descripcion, costo_base, CASE WHEN activo = 1 THEN 'Activo' ELSE 'Inactivo' END AS estado FROM servicio ORDER BY id_servicio");
         $datos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $columnas = ['Código', 'Nombre', 'Descripción', 'Costo Base', 'Estado'];

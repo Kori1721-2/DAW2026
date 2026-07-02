@@ -16,7 +16,7 @@ if ($pagina < 1) {
 
 $inicio = ($pagina - 1) * $registrosPorPagina;
 
-$sql = "SELECT o.*, s.nombre AS servicio
+$sql = "SELECT o.*, s.nombre AS paquete
         FROM orden_servicio o
         INNER JOIN servicio s ON o.id_servicio = s.id_servicio
         ORDER BY o.id_orden ASC LIMIT $inicio, $registrosPorPagina";
@@ -34,24 +34,24 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     <?php if (isset($_SESSION['mensaje'])): ?>
         <?php if ($_SESSION['mensaje'] == 'agregado'): ?>
             <div class="alert alert-success alert-dismissible fade show" style="color: black;" role="alert">
-                Orden de servicio agregada correctamente.
+                Orden de paquete agregada correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'editado'): ?>
             <div class="alert alert-primary alert-dismissible fade show" style="color: black;" role="alert">
-                Orden de servicio actualizada correctamente.
+                Orden de paquete actualizada correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'eliminado'): ?>
             <div class="alert alert-danger alert-dismissible fade show" style="color: black;" role="alert">
-                Orden de servicio eliminada correctamente.
+                Orden de paquete eliminada correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
         <?php unset($_SESSION['mensaje']); ?>
     <?php endif; ?>
     <div class="orden-servicio-header">
-        <h3>Listado de Órdenes de Servicio</h3>
+        <h3>Listado de Órdenes de Paquetes</h3>
         <a class="btn-agregar"
             data-bs-toggle="modal"
             data-bs-target="#modalAgregar">
@@ -64,7 +64,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
             <thead>
                 <tr>
                     <th>Código</th>
-                    <th>Servicio</th>
+                    <th>Paquete</th>
                     <th>Fecha</th>
                     <th>Cliente</th>
                     <th>Estado</th>
@@ -76,7 +76,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                 <?php foreach ($result as $row) { ?>
                     <tr>
                         <td><?php echo $row['id_orden']; ?></td>
-                        <td><?php echo htmlspecialchars($row['servicio']); ?></td>
+                        <td><?php echo htmlspecialchars($row['paquete']); ?></td>
                         <td><?php echo htmlspecialchars($row['fecha']); ?></td>
                         <td><?php echo htmlspecialchars($row['cliente']); ?></td>
                         <td>
@@ -111,7 +111,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header bg-warning text-white">
-                                    <h5 class="modal-title" style="color:black;">Editar Orden de Servicio</h5>
+                                    <h5 class="modal-title" style="color:black;">Editar Orden de Paquete</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
@@ -123,7 +123,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                                             name="id_orden"
                                             value="<?php echo $row['id_orden']; ?>">
                                         <div class="mb-3">
-                                            <label>Servicio</label>
+                                            <label>Paquete</label>
                                             <select name="id_servicio" class="form-control" required>
                                                 <option value="">Seleccione</option>
                                                 <?php foreach ($servicios as $s): ?>
@@ -188,7 +188,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <p>¿Desea eliminar la orden de servicio?</p>
+                                    <p>¿Desea eliminar la orden de paquete?</p>
                                     <h5 style="color: black;">Orden #<?php echo $row['id_orden']; ?> - <?php echo htmlspecialchars($row['cliente']); ?></h5>
                                 </div>
                                 <div class="modal-footer">
@@ -220,14 +220,14 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
         <?php if ($pagina > 1): ?>
             <a class="pagination-previous"
                 style="color:black; text-decoration:none;"
-                href="principal.php?vista=orden_servicio&pagina=<?php echo $pagina - 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                href="principal.php?vista=orden_paquete&pagina=<?php echo $pagina - 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
                 Anterior
             </a>
         <?php endif; ?>
         <?php if ($pagina < $totalPaginas): ?>
             <a class="pagination-next"
                 style="color:black; text-decoration:none;"
-                href="principal.php?vista=orden_servicio&pagina=<?php echo $pagina + 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                href="principal.php?vista=orden_paquete&pagina=<?php echo $pagina + 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
                 Siguiente
             </a>
         <?php endif; ?>
@@ -236,7 +236,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                 <li>
                     <a class="pagination-link <?php echo ($i == $pagina) ? 'is-current' : ''; ?>"
                         style="color:black; text-decoration: none;"
-                        href="principal.php?vista=orden_servicio&pagina=<?php echo $i; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                        href="principal.php?vista=orden_paquete&pagina=<?php echo $i; ?>&limite=<?php echo $registrosPorPagina; ?>">
                         <?php echo $i; ?>
                     </a>
                 </li>
@@ -250,13 +250,13 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" style="color:black;">Agregar Orden de Servicio</h5>
+                <h5 class="modal-title" style="color:black;">Agregar Orden de Paquete</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form action="../controllers/agregar_orden_servicio.php" method="POST">
                     <div class="mb-3">
-                        <label>Servicio</label>
+                        <label>Paquete</label>
                         <select name="id_servicio" class="form-control" required>
                             <option value="">Seleccione</option>
                             <?php foreach ($servicios as $s): ?>

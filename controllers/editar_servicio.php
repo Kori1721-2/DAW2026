@@ -36,6 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['mensaje'] = 'error';
     }
 
-    header("Location: ../views/principal.php?vista=servicio");
+    header("Location: ../views/principal.php?vista=paquete");
     exit();
 }

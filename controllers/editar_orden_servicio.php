@@ -20,6 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['mensaje'] = 'error';
     }
 
-    header("Location: ../views/principal.php?vista=orden_servicio");
+    header("Location: ../views/principal.php?vista=orden_paquete");
     exit();
 }

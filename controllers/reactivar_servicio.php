@@ -11,7 +11,7 @@ if (
 }
 
 if (!isset($_POST['id_servicio']) || !is_numeric($_POST['id_servicio'])) {
-    die('ID de servicio inválido');
+    die('ID de paquete inválido');
 }
 
 $id_servicio = (int) $_POST['id_servicio'];
@@ -23,13 +23,13 @@ $servicio = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$servicio) {
     $_SESSION['mensaje'] = 'no_existe';
-    header('Location: ../views/principal.php?vista=servicio');
+    header('Location: ../views/principal.php?vista=paquete');
     exit();
 }
 
 if ((int)$servicio['activo'] === 1) {
     $_SESSION['mensaje'] = 'ya_activo';
-    header('Location: ../views/principal.php?vista=servicio');
+    header('Location: ../views/principal.php?vista=paquete');
     exit();
 }
 
@@ -42,5 +42,5 @@ if ($stmt->execute([$id_servicio])) {
     $_SESSION['mensaje'] = 'error_reactivar';
 }
 
-header('Location: ../views/principal.php?vista=servicio');
+header('Location: ../views/principal.php?vista=paquete');
 exit();

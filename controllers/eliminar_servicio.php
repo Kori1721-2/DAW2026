@@ -19,5 +19,5 @@ if ($stmt->execute([$id_servicio])) {
     $_SESSION['mensaje'] = 'error';
 }
 
-header('Location: ../views/principal.php?vista=servicio');
+header('Location: ../views/principal.php?vista=paquete');
 exit();

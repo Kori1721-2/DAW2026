@@ -1,67 +1,74 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .navbar {
     height: 80px;
-    background-color: #343a40 !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-brand {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     color: white !important;
     display: flex;
     align-items: center;
 }
 
+.navbar-brand small {
+    font-weight: normal;
+    opacity: 0.8;
+}
+
 .sidebar {
     position: fixed;
     top: 80px;
     left: 0;
-    width: 220px;
+    width: 230px;
     height: calc(100vh - 80px);
-    background-color: #343a40;
+    background: linear-gradient(180deg, #1a1a2e, #16213e);
     overflow-y: auto;
+    z-index: 100;
 }
 
 .sidebar a {
     display: block;
-    color: #d1d1d1;
+    color: rgba(255, 255, 255, 0.7);
     padding: 14px 20px;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 14px;
     transition: all 0.3s ease;
     border-left: 4px solid transparent;
 }
 
 .sidebar a:hover {
-    background-color: #495057;
+    background: rgba(255, 255, 255, 0.08);
     color: white;
-    border-left: 4px solid #17a2b8;
+    border-left: 4px solid #f7d96b;
     padding-left: 25px;
 }
 
 .sidebar a i {
-    width: 20px;
+    width: 22px;
+    text-align: center;
 }
 
 .content {
-    margin-left: 220px !important;
+    margin-left: 230px !important;
     margin-top: 80px !important;
-    padding: 15px !important;
+    padding: 20px !important;
     min-height: calc(100vh - 80px) !important;
-    background-color: #f4f4f4;
+    background-color: #f0f2f5;
 }
 
 .content h2 {
-    font-size: 36px;
-    font-weight: bold;
-    color: #333;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a2e;
     margin-bottom: 25px;
 }
 
@@ -71,19 +78,21 @@ body {
     height: auto;
     display: block;
     margin: auto;
-    border-radius: 5px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 footer {
-    background-color: #343a40;
-    color: white;
-    margin-left: 220px;
+    background: #1a1a2e;
+    color: rgba(255, 255, 255, 0.8);
+    margin-left: 230px;
     padding: 20px 10px;
-    border-top: 3px solid #17a2b8;
+    border-top: 3px solid #f7d96b;
 }
 
 footer h5 {
     font-weight: bold;
+    color: #fff;
 }
 
 footer p {
@@ -92,39 +101,67 @@ footer p {
 }
 
 .sidebar::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .sidebar::-webkit-scrollbar-track {
-    background: #343a40;
+    background: transparent;
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-    background: #6c757d;
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover {
-    background: #adb5bd;
+    background: rgba(255, 255, 255, 0.3);
 }
 
-.btn-cerrar-sesion{
-    color:#fff !important;
-    text-decoration:none;
-    padding:8px 16px;
-    border-radius:4px;
-    transition:.3s;
-    font-size:14px;
-    background:rgba(255,255,255,.1);
+.btn-cerrar-sesion {
+    color: #fff !important;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.1);
 }
 
-.btn-cerrar-sesion:hover{
-    background:#dc3545;
-    color:#fff !important;
+.btn-cerrar-sesion:hover {
+    background: #dc3545;
+    color: #fff !important;
+    transform: translateY(-1px);
+}
+
+.card {
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.card-header {
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.modal-content {
+    border-radius: 16px !important;
+    border: none !important;
+}
+
+.modal-header {
+    border-radius: 16px 16px 0 0 !important;
+}
+
+.btn {
+    border-radius: 8px !important;
+}
+
+.table {
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 @media (max-width: 768px) {
-
     .sidebar {
         width: 100%;
         height: auto;
