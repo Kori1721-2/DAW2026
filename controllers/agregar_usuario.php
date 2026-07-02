@@ -1,4 +1,7 @@
 <?php
+session_start();
+include_once "../conexion/conex.php";
+
 // Incluir la conexión (Asegúrate de que conex.php use PDO)
 include_once "../conexion/conex.php";
 

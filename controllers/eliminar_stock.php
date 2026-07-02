@@ -21,3 +21,4 @@ if ($stmt->execute([$id_stock])) {
 
 header('Location: ../views/principal.php?vista=stock');
 exit();
+

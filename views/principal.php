@@ -46,7 +46,7 @@
         <a href="principal.php?vista=producto"><i class="fas fa-box-open mr-2"></i> Productos</a>
         <a href="principal.php?vista=almacen"><i class="fas fa-warehouse mr-2"></i> Almacenes</a>
         <a href="principal.php?vista=paquete"><i class="fas fa-cross mr-2"></i> Paquetes</a>
-        <a href="principal.php?vista=orden_paquete"><i class="fas fa-file-signature mr-2"></i> Órdenes de Paquetes</a>
+        <a href="principal.php?vista=orden_paquete"><i class="fas fa-file-signature mr-2"></i> Órdenes de Servicio</a>
         <a href="principal.php?vista=movimiento"><i class="fas fa-right-left mr-2"></i> Movimientos</a>
         <a href="principal.php?vista=usuarios"><i class="fas fa-user-tie mr-2"></i> Usuarios</a>
         <a href="principal.php?vista=reportes"><i class="fas fa-chart-column mr-2"></i> Reportes</a>
@@ -54,7 +54,6 @@
         <a href="paquetes_clientes.php" target="_blank" style="border-top: 1px solid #555; margin-top: 5px;">
             <i class="fas fa-star mr-2" style="color: #ffc107;"></i> Ver Paquetes (Clientes)
         </a>
-        <!--<a href="#" data-bs-toggle="modal" data-bs-target="#modalCerrarSesion"><i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión</a>-->
     </div>
 
     <!-- CONTENIDO PRINCIPAL -->

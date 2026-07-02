@@ -23,3 +23,4 @@ try {
 
 header('Location: ../views/principal.php?vista=orden_paquete');
 exit();
+

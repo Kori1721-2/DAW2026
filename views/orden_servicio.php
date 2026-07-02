@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -34,24 +34,24 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     <?php if (isset($_SESSION['mensaje'])): ?>
         <?php if ($_SESSION['mensaje'] == 'agregado'): ?>
             <div class="alert alert-success alert-dismissible fade show" style="color: black;" role="alert">
-                Orden de paquete agregada correctamente.
+                Orden de Servicio agregada correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'editado'): ?>
             <div class="alert alert-primary alert-dismissible fade show" style="color: black;" role="alert">
-                Orden de paquete actualizada correctamente.
+                Orden de Servicio actualizada correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'eliminado'): ?>
             <div class="alert alert-danger alert-dismissible fade show" style="color: black;" role="alert">
-                Orden de paquete eliminada correctamente.
+                Orden de Servicio eliminada correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
         <?php unset($_SESSION['mensaje']); ?>
     <?php endif; ?>
     <div class="orden-servicio-header">
-        <h3>Listado de Órdenes de Paquetes</h3>
+        <h3>Listado de Órdenes de Servicio</h3>
         <a class="btn-agregar"
             data-bs-toggle="modal"
             data-bs-target="#modalAgregar">

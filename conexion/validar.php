@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Incluimos la conexión que ya usa PDO
 include_once "./conex.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -17,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($userRow) {
             if (password_verify($contrasenia, $userRow['pass_Usuario'])) {
                 $_SESSION['nomb_usuario'] = $usuario;
-                $_SESSION['codi_Usuario'] = $userRow['codi_Usuario'];
-                
+                $_SESSION['codi_Usuario'] = $userRow['idusuario'];
+
                 header("Location: ../views/principal.php");
                 exit;
             } else {
