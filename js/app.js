@@ -82,20 +82,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 40);
     });
 
-    // ==========================================
-    // 7. CONFIRMACION antes de eliminar (extra)
-    // ==========================================
-    document.querySelectorAll('form[action*="eliminar"]').forEach(function (form) {
-        form.addEventListener('submit', function (e) {
-            var btn = this.querySelector('button[type="submit"]');
-            if (btn && btn.dataset.confirmed !== 'true') {
-                e.preventDefault();
-                if (confirm('¿Estás seguro de realizar esta acción?')) {
-                    btn.dataset.confirmed = 'true';
-                    this.submit();
-                }
-            }
-        });
-    });
-
 });

@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contrasenia = $_POST["txtpass"] ?? '';
 
     try {
-        $stmt = $conexion->prepare("SELECT idusuario, pass_Usuario FROM usuarios WHERE nomb_Usuario = :user");
+        $stmt = $conexion->prepare("SELECT idusuario, pass_Usuario, rol FROM usuarios WHERE nomb_Usuario = :user");
         $stmt->bindParam(':user', $usuario);
         $stmt->execute();
 
@@ -17,8 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (password_verify($contrasenia, $userRow['pass_Usuario'])) {
                 $_SESSION['nomb_usuario'] = $usuario;
                 $_SESSION['codi_Usuario'] = $userRow['idusuario'];
+                $_SESSION['rol'] = $userRow['rol'];
 
-                header("Location: ../views/principal.php");
+                if ($userRow['rol'] === 'Administrador') {
+                    header("Location: ../views/principal.php");
+                } else {
+                    header("Location: ../views/trabajador.php");
+                }
                 exit;
             } else {
                 echo "Contraseña incorrecta.";

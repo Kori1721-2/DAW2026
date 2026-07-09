@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['codi_Usuario'])) {
+    header("Location: ../index.php");
+    exit;
+}
+$rol = $_SESSION['rol'] ?? '';
+$esAdmin = ($rol === 'Administrador');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +16,7 @@
     <title>Funeraria San Pedro - Sistema de Inventario</title>
 
     <!-- Frameworks -->
-    <link rel="stylesheet" href="../css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -37,7 +46,7 @@
         </a>
         <a class="btn-cerrar-sesion" href="#" data-bs-toggle="modal" data-bs-target="#modalCerrarSesion"><i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión</a>
     </nav>
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR --><?php if ($esAdmin): ?>
     <div class="sidebar">
         <a href="principal.php?vista=inicio"><i class="fas fa-house mr-2"></i> Inicio</a>
         <a href="principal.php?vista=categoria"><i class="fas fa-tags mr-2"></i> Categorías</a>
@@ -54,7 +63,7 @@
         <a href="paquetes_clientes.php" target="_blank" style="border-top: 1px solid #555; margin-top: 5px;">
             <i class="fas fa-star mr-2" style="color: #ffc107;"></i> Ver Paquetes (Clientes)
         </a>
-    </div>
+    </div><?php endif; ?>
 
     <!-- CONTENIDO PRINCIPAL -->
     <div class="content">

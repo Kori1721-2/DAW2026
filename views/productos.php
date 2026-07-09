@@ -1,9 +1,4 @@
 <?php
-//session_start();
-
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
 
 include_once '../conexion/conex.php';
 
@@ -35,6 +30,26 @@ $proveedores = $conexion->query("SELECT id_proveedor, razon_social FROM proveedo
 $totalRegistros = $conexion->query("SELECT COUNT(*) FROM producto")->fetchColumn();
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 ?>
+<style>
+    .productos-container .table,
+    .productos-container .table td,
+    .productos-container .table th,
+    .productos-container h3,
+    .productos-container label,
+    .productos-container .modal-title {
+        color: #000 !important;
+    }
+    .productos-container .table thead th {
+        background: #343a40 !important;
+        color: #fff !important;
+    }
+    .productos-container .modal-header h5 {
+        color: #000 !important;
+    }
+    .productos-container .badge {
+        color: #fff !important;
+    }
+</style>
 <div class="productos-container">
     <?php if (isset($_SESSION['mensaje'])): ?>
         <?php if ($_SESSION['mensaje'] == 'agregado'): ?>
@@ -86,7 +101,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                         <td>
                             <?php if (!empty($row['imagen'])): ?>
                                 <img src="../img/productos/<?php echo $row['imagen']; ?>"
-                                    style="width:250px;height:150px;object-fit:cover;border-radius:4px;"
+                                    style="width:300px;height:150px;object-fit:cover;border-radius:4px;"
                                     alt="Producto">
                             <?php else: ?>
                                 <span class="text-muted">—</span>

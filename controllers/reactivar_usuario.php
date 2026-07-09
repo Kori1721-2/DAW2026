@@ -1,8 +1,12 @@
 <?php
 session_start();
+include_once "../conexion/verificar_acceso.php";
 include_once "../conexion/conex.php";
 
-include_once '../conexion/conex.php';
+if ($_SESSION['rol'] !== 'Administrador') {
+    header("Location: ../views/trabajador.php");
+    exit;
+}
 
 if (
     !isset($_POST['csrf_token']) ||

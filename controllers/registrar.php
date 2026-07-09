@@ -5,6 +5,7 @@ include_once "../conexion/conex.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = trim($_POST["txt_usuario"]);
     $contrasenia = $_POST["txt_pass"];
+    $rol = trim($_POST["txt_rol"] ?? 'Trabajador');
 
     try {
         //Verificar si el usuario ya existe para evitar duplicados
@@ -20,12 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $passHash = password_hash($contrasenia, PASSWORD_DEFAULT);
 
         //Insertar en la base de datos
-        $insertar = $conexion->prepare("INSERT INTO usuarios (nomb_Usuario, pass_Usuario, estd_Usuario) VALUES (:user, :pass, DEFAULT)");
+        $insertar = $conexion->prepare("INSERT INTO usuarios (nomb_Usuario, pass_Usuario, estd_Usuario, rol) VALUES (:user, :pass, DEFAULT, :rol)");
         $insertar->bindParam(':user', $usuario);
         $insertar->bindParam(':pass', $passHash);
+        $insertar->bindParam(':rol', $rol);
 
         if ($insertar->execute()) {
-            header("Location: ../index.php");/*?mensaje=registrado")*/
+            header("Location: ../index.php");
             exit();
         }
 

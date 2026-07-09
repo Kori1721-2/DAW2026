@@ -1,11 +1,9 @@
 <?php
 
 
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
 include_once '../conexion/conex.php';
+
+$basePage = ($_SESSION['rol'] === 'Administrador') ? 'principal' : 'trabajador';
 
 $registrosPorPagina = isset($_GET['limite']) ? (int)$_GET['limite'] : 5;
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
@@ -35,6 +33,26 @@ $almacenes = $conexion->query("SELECT id_almacen, nombre FROM almacen WHERE acti
 $totalRegistros = $conexion->query("SELECT COUNT(*) FROM stock")->fetchColumn();
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 ?>
+<style>
+    .stock-container .table,
+    .stock-container .table td,
+    .stock-container .table th,
+    .stock-container h3,
+    .stock-container label,
+    .stock-container .modal-title {
+        color: #000 !important;
+    }
+    .stock-container .table thead th {
+        background: #343a40 !important;
+        color: #fff !important;
+    }
+    .stock-container .modal-header h5 {
+        color: #000 !important;
+    }
+    .stock-container .badge {
+        color: #fff !important;
+    }
+</style>
 <div class="stock-container">
     <?php if (isset($_SESSION['mensaje'])): ?>
         <?php if ($_SESSION['mensaje'] == 'agregado'): ?>
@@ -212,14 +230,14 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
         <?php if ($pagina > 1): ?>
             <a class="pagination-previous"
                 style="color:black; text-decoration:none;"
-                href="principal.php?vista=stock&pagina=<?php echo $pagina - 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                href="<?php echo $basePage; ?>.php?vista=stock&pagina=<?php echo $pagina - 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
                 Anterior
             </a>
         <?php endif; ?>
         <?php if ($pagina < $totalPaginas): ?>
             <a class="pagination-next"
                 style="color:black; text-decoration:none;"
-                href="principal.php?vista=stock&pagina=<?php echo $pagina + 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                href="<?php echo $basePage; ?>.php?vista=stock&pagina=<?php echo $pagina + 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
                 Siguiente
             </a>
         <?php endif; ?>
@@ -228,7 +246,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                 <li>
                     <a class="pagination-link <?php echo ($i == $pagina) ? 'is-current' : ''; ?>"
                         style="color:black; text-decoration: none;"
-                        href="principal.php?vista=stock&pagina=<?php echo $i; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                        href="<?php echo $basePage; ?>.php?vista=stock&pagina=<?php echo $i; ?>&limite=<?php echo $registrosPorPagina; ?>">
                         <?php echo $i; ?>
                     </a>
                 </li>

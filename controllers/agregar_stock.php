@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once "../conexion/verificar_acceso.php";
 include_once "../conexion/conex.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -18,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['mensaje'] = 'error';
     }
 
-    header("Location: ../views/principal.php?vista=stock");
+    header("Location: ../views/" . ($_SESSION['rol'] === 'Administrador' ? 'principal' : 'trabajador') . ".php?vista=stock");
     exit();
 }
-

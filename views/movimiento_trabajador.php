@@ -1,7 +1,6 @@
 <?php
 
-
-$basePage = ($_SESSION['rol'] === 'Administrador') ? 'principal' : 'trabajador';
+$basePage = 'trabajador';
 
 include_once '../conexion/conex.php';
 
@@ -47,7 +46,9 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     .movimiento-container .table th,
     .movimiento-container h3,
     .movimiento-container label,
-    .movimiento-container .modal-title {
+    .movimiento-container .modal-title,
+    .movimiento-container th,
+    .movimiento-container td {
         color: #000 !important;
     }
     .movimiento-container .table thead th {
@@ -58,6 +59,34 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
         color: #000 !important;
     }
     .movimiento-container .badge {
+        color: #fff !important;
+    }
+    .movimiento-container .btn-agregar {
+        background: #28a745 !important;
+        color: #fff !important;
+        padding: 10px 16px !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+    }
+    .movimiento-container .btn-agregar:hover {
+        background: #218838 !important;
+        color: #fff !important;
+    }
+    .movimiento-container .btn-editar {
+        background: #ffc107 !important;
+        color: #000 !important;
+    }
+    .movimiento-container .btn-editar:hover {
+        background: #e0a800 !important;
+        color: #000 !important;
+    }
+    .movimiento-container .btn-eliminar {
+        background: #dc3545 !important;
+        color: #fff !important;
+    }
+    .movimiento-container .btn-eliminar:hover {
+        background: #bb2d3b !important;
         color: #fff !important;
     }
 </style>
@@ -91,8 +120,8 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
         </a>
     </div>
     <div class="table-responsive">
-        <table class="tabla-movimiento">
-            <thead>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th>Código</th>
                     <th>Producto</th>
@@ -131,13 +160,15 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                         <td>
                             <a class="btn-editar"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalEditar<?php echo $row['id_movimiento']; ?>">
+                                data-bs-target="#modalEditar<?php echo $row['id_movimiento']; ?>"
+                                title="Modificar">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <br>
                             <a class="btn-eliminar"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalEliminar<?php echo $row['id_movimiento']; ?>">
+                                data-bs-target="#modalEliminar<?php echo $row['id_movimiento']; ?>"
+                                title="Eliminar">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>

@@ -1,6 +1,12 @@
 <?php
 session_start();
+include_once "../conexion/verificar_acceso.php";
 include_once "../conexion/conex.php";
+
+if ($_SESSION['rol'] !== 'Administrador') {
+    header("Location: ../views/trabajador.php");
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_producto = (int) $_POST["id_producto"];
@@ -50,4 +56,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: ../views/principal.php?vista=producto");
     exit();
 }
-

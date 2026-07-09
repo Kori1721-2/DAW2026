@@ -1,9 +1,8 @@
 <?php
 
-
-$basePage = ($_SESSION['rol'] === 'Administrador') ? 'principal' : 'trabajador';
-
 include_once '../conexion/conex.php';
+
+$basePage = 'trabajador';
 
 $registrosPorPagina = isset($_GET['limite']) ? (int)$_GET['limite'] : 5;
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
@@ -34,7 +33,9 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     .orden-servicio-container .table th,
     .orden-servicio-container h3,
     .orden-servicio-container label,
-    .orden-servicio-container .modal-title {
+    .orden-servicio-container .modal-title,
+    .orden-servicio-container th,
+    .orden-servicio-container td {
         color: #000 !important;
     }
     .orden-servicio-container .table thead th {
@@ -47,22 +48,50 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     .orden-servicio-container .badge {
         color: #fff !important;
     }
+    .orden-servicio-container .btn-agregar {
+        background: #28a745 !important;
+        color: #fff !important;
+        padding: 10px 16px !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+    }
+    .orden-servicio-container .btn-agregar:hover {
+        background: #218838 !important;
+        color: #fff !important;
+    }
+    .orden-servicio-container .btn-editar {
+        background: #ffc107 !important;
+        color: #000 !important;
+    }
+    .orden-servicio-container .btn-editar:hover {
+        background: #e0a800 !important;
+        color: #000 !important;
+    }
+    .orden-servicio-container .btn-eliminar {
+        background: #dc3545 !important;
+        color: #fff !important;
+    }
+    .orden-servicio-container .btn-eliminar:hover {
+        background: #bb2d3b !important;
+        color: #fff !important;
+    }
 </style>
 <div class="orden-servicio-container">
     <?php if (isset($_SESSION['mensaje'])): ?>
         <?php if ($_SESSION['mensaje'] == 'agregado'): ?>
             <div class="alert alert-success alert-dismissible fade show" style="color: black;" role="alert">
-                Orden de Servicio agregada correctamente.
+                Orden agregada correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'editado'): ?>
             <div class="alert alert-primary alert-dismissible fade show" style="color: black;" role="alert">
-                Orden de Servicio actualizada correctamente.
+                Orden actualizada correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'eliminado'): ?>
             <div class="alert alert-danger alert-dismissible fade show" style="color: black;" role="alert">
-                Orden de Servicio eliminada correctamente.
+                Orden eliminada correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
@@ -78,8 +107,8 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
         </a>
     </div>
     <div class="table-responsive">
-        <table class="tabla-orden-servicio">
-            <thead>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th>Código</th>
                     <th>Paquete</th>
@@ -112,13 +141,15 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                         <td>
                             <a class="btn-editar"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalEditar<?php echo $row['id_orden']; ?>">
+                                data-bs-target="#modalEditar<?php echo $row['id_orden']; ?>"
+                                title="Modificar">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <br>
                             <a class="btn-eliminar"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalEliminar<?php echo $row['id_orden']; ?>">
+                                data-bs-target="#modalEliminar<?php echo $row['id_orden']; ?>"
+                                title="Eliminar">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>
@@ -129,7 +160,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header bg-warning text-white">
-                                    <h5 class="modal-title" style="color:black;">Editar Orden de Paquete</h5>
+                                    <h5 class="modal-title" style="color:black;">Editar Orden</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
@@ -206,8 +237,8 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <p>¿Desea eliminar la orden de paquete?</p>
-                                    <h5 style="color: black;">Orden #<?php echo $row['id_orden']; ?> - <?php echo htmlspecialchars($row['cliente']); ?></h5>
+                                    <p>¿Desea eliminar la orden?</p>
+                                    <h5 style="color: black;">#<?php echo $row['id_orden']; ?> — <?php echo htmlspecialchars($row['cliente']); ?></h5>
                                 </div>
                                 <div class="modal-footer">
                                     <form action="../controllers/eliminar_orden_servicio.php" method="POST">
@@ -268,7 +299,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" style="color:black;">Agregar Orden de Paquete</h5>
+                <h5 class="modal-title" style="color:black;">Agregar Orden</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">

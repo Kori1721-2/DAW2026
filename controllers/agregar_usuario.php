@@ -1,9 +1,12 @@
 <?php
 session_start();
+include_once "../conexion/verificar_acceso.php";
 include_once "../conexion/conex.php";
 
-// Incluir la conexión (Asegúrate de que conex.php use PDO)
-include_once "../conexion/conex.php";
+if ($_SESSION['rol'] !== 'Administrador') {
+    header("Location: ../views/trabajador.php");
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = trim($_POST["nomb_Usuario"]);

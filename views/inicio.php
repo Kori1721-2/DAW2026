@@ -1,9 +1,4 @@
 <?php
-//session_start();
-
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
 
 include_once '../conexion/conex.php';
 
@@ -153,7 +148,7 @@ $productosStock = $conexion->query("
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="card-title mb-0">Paquetes</h6>
+                            <h6 class="card-title mb-0">Servicios</h6>
                             <h2 class="mb-0"><?php echo $totalServicios; ?></h2>
                         </div>
                         <i class="fa fa-cross fa-2x opacity-50"></i>

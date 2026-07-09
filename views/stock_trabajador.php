@@ -1,9 +1,8 @@
 <?php
 
-
-$basePage = ($_SESSION['rol'] === 'Administrador') ? 'principal' : 'trabajador';
-
 include_once '../conexion/conex.php';
+
+$basePage = 'trabajador';
 
 $registrosPorPagina = isset($_GET['limite']) ? (int)$_GET['limite'] : 5;
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
@@ -14,75 +13,97 @@ if ($pagina < 1) {
 
 $inicio = ($pagina - 1) * $registrosPorPagina;
 
-$sql = "SELECT m.*, 
-               p.nombre AS producto, 
-               a.nombre AS almacen,
-               os.id_orden AS orden_ref, os.cliente AS cliente
-        FROM movimiento m
-        INNER JOIN stock s ON m.id_stock = s.id_stock
+$sql = "SELECT s.id_stock, s.cantidad, s.fecha_actualizacion,
+               p.id_producto, p.nombre AS producto, p.unidad_medida,
+               a.id_almacen, a.nombre AS almacen
+        FROM stock s
         INNER JOIN producto p ON s.id_producto = p.id_producto
         INNER JOIN almacen a ON s.id_almacen = a.id_almacen
-        LEFT JOIN orden_servicio os ON m.id_orden = os.id_orden
-        ORDER BY m.id_movimiento ASC LIMIT $inicio, $registrosPorPagina";
+        ORDER BY s.id_stock ASC
+        LIMIT $inicio, $registrosPorPagina";
 
 $stmt = $conexion->prepare($sql);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stockItems = $conexion->query(
-    "SELECT s.id_stock, p.nombre AS producto, a.nombre AS almacen 
-     FROM stock s 
-     INNER JOIN producto p ON s.id_producto = p.id_producto 
-     INNER JOIN almacen a ON s.id_almacen = a.id_almacen"
-)->fetchAll(PDO::FETCH_ASSOC);
+$productos = $conexion->query("SELECT id_producto, nombre, unidad_medida FROM producto")->fetchAll(PDO::FETCH_ASSOC);
+$almacenes = $conexion->query("SELECT id_almacen, nombre FROM almacen WHERE activo = 1")->fetchAll(PDO::FETCH_ASSOC);
 
-$ordenes = $conexion->query("SELECT id_orden, cliente FROM orden_servicio")->fetchAll(PDO::FETCH_ASSOC);
-
-$totalRegistros = $conexion->query("SELECT COUNT(*) FROM movimiento")->fetchColumn();
+$totalRegistros = $conexion->query("SELECT COUNT(*) FROM stock")->fetchColumn();
 $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
 ?>
 <style>
-    .movimiento-container .table,
-    .movimiento-container .table td,
-    .movimiento-container .table th,
-    .movimiento-container h3,
-    .movimiento-container label,
-    .movimiento-container .modal-title {
+    .stock-container .table,
+    .stock-container .table td,
+    .stock-container .table th,
+    .stock-container h3,
+    .stock-container label,
+    .stock-container .modal-title,
+    .stock-container th,
+    .stock-container td {
         color: #000 !important;
     }
-    .movimiento-container .table thead th {
+    .stock-container .table thead th {
         background: #343a40 !important;
         color: #fff !important;
     }
-    .movimiento-container .modal-header h5 {
+    .stock-container .modal-header h5 {
         color: #000 !important;
     }
-    .movimiento-container .badge {
+    .stock-container .badge {
+        color: #fff !important;
+    }
+    .stock-container .btn-agregar {
+        background: #28a745 !important;
+        color: #fff !important;
+        padding: 10px 16px !important;
+        border-radius: 4px !important;
+        text-decoration: none !important;
+        font-weight: 600 !important;
+    }
+    .stock-container .btn-agregar:hover {
+        background: #218838 !important;
+        color: #fff !important;
+    }
+    .stock-container .btn-editar {
+        background: #ffc107 !important;
+        color: #000 !important;
+    }
+    .stock-container .btn-editar:hover {
+        background: #e0a800 !important;
+        color: #000 !important;
+    }
+    .stock-container .btn-eliminar {
+        background: #dc3545 !important;
+        color: #fff !important;
+    }
+    .stock-container .btn-eliminar:hover {
+        background: #bb2d3b !important;
         color: #fff !important;
     }
 </style>
-<div class="movimiento-container">
+<div class="stock-container">
     <?php if (isset($_SESSION['mensaje'])): ?>
         <?php if ($_SESSION['mensaje'] == 'agregado'): ?>
             <div class="alert alert-success alert-dismissible fade show" style="color: black;" role="alert">
-                Movimiento agregado correctamente.
+                Stock agregado correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'editado'): ?>
             <div class="alert alert-primary alert-dismissible fade show" style="color: black;" role="alert">
-                Movimiento actualizado correctamente.
+                Stock actualizado correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php elseif ($_SESSION['mensaje'] == 'eliminado'): ?>
             <div class="alert alert-danger alert-dismissible fade show" style="color: black;" role="alert">
-                Movimiento eliminado correctamente.
+                Stock eliminado correctamente.
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         <?php endif; ?>
         <?php unset($_SESSION['mensaje']); ?>
     <?php endif; ?>
-    <div class="movimiento-header">
-        <h3>Listado de Movimientos</h3>
+    <div class="stock-header">
+        <h3>Listado de Stock</h3>
         <a class="btn-agregar"
             data-bs-toggle="modal"
             data-bs-target="#modalAgregar">
@@ -91,104 +112,82 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
         </a>
     </div>
     <div class="table-responsive">
-        <table class="tabla-movimiento">
-            <thead>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th>Código</th>
                     <th>Producto</th>
+                    <th>Unidad Medida</th>
                     <th>Almacén</th>
-                    <th>Tipo</th>
                     <th>Cantidad</th>
-                    <th>Fecha</th>
-                    <th>Orden Relacionada</th>
+                    <th>Fecha Actualización</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($result as $row) { ?>
                     <tr>
-                        <td><?php echo $row['id_movimiento']; ?></td>
+                        <td><?php echo $row['id_stock']; ?></td>
                         <td><?php echo htmlspecialchars($row['producto']); ?></td>
+                        <td><?php echo htmlspecialchars($row['unidad_medida']); ?></td>
                         <td><?php echo htmlspecialchars($row['almacen']); ?></td>
-                        <td>
-                            <?php if ($row['tipo'] == 'entrada'): ?>
-                                <span class="badge bg-success">Entrada</span>
-                            <?php elseif ($row['tipo'] == 'salida'): ?>
-                                <span class="badge bg-danger">Salida</span>
-                            <?php elseif ($row['tipo'] == 'ajuste'): ?>
-                                <span class="badge bg-warning text-dark">Ajuste</span>
-                            <?php endif; ?>
-                        </td>
                         <td><?php echo $row['cantidad']; ?></td>
-                        <td><?php echo htmlspecialchars($row['fecha']); ?></td>
-                        <td>
-                            <?php if ($row['orden_ref']): ?>
-                                #<?php echo $row['orden_ref']; ?> - <?php echo htmlspecialchars($row['cliente'] ?? ''); ?>
-                            <?php else: ?>
-                                <span class="text-muted">—</span>
-                            <?php endif; ?>
-                        </td>
+                        <td><?php echo $row['fecha_actualizacion']; ?></td>
                         <td>
                             <a class="btn-editar"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalEditar<?php echo $row['id_movimiento']; ?>">
+                                data-bs-target="#modalEditar<?php echo $row['id_stock']; ?>"
+                                title="Modificar">
                                 <i class="fa fa-pencil"></i>
                             </a>
                             <br>
                             <a class="btn-eliminar"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalEliminar<?php echo $row['id_movimiento']; ?>">
+                                data-bs-target="#modalEliminar<?php echo $row['id_stock']; ?>"
+                                title="Eliminar">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>
                     </tr>
                     <div class="modal fade"
-                        id="modalEditar<?php echo $row['id_movimiento']; ?>"
+                        id="modalEditar<?php echo $row['id_stock']; ?>"
                         tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header bg-warning text-white">
-                                    <h5 class="modal-title" style="color:black;">Editar Movimiento</h5>
+                                    <h5 class="modal-title" style="color:black;">Editar Stock</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="../controllers/editar_movimiento.php" method="POST">
+                                    <form action="../controllers/editar_stock.php" method="POST">
                                         <input type="hidden"
                                             name="csrf_token"
                                             value="<?php echo $_SESSION['csrf_token']; ?>">
                                         <input type="hidden"
-                                            name="id_movimiento"
-                                            value="<?php echo $row['id_movimiento']; ?>">
+                                            name="id_stock"
+                                            value="<?php echo $row['id_stock']; ?>">
                                         <div class="mb-3">
-                                            <label>Stock (Producto - Almacén)</label>
-                                            <select name="id_stock" class="form-control" required>
+                                            <label>Producto</label>
+                                            <select name="id_producto" class="form-control" required>
                                                 <option value="">Seleccione</option>
-                                                <?php foreach ($stockItems as $st): ?>
-                                                    <option value="<?php echo $st['id_stock']; ?>"
-                                                        <?php echo ($st['id_stock'] == $row['id_stock']) ? 'selected' : ''; ?>>
-                                                        <?php echo htmlspecialchars($st['producto'] . ' - ' . $st['almacen']); ?>
+                                                <?php foreach ($productos as $prod): ?>
+                                                    <option value="<?php echo $prod['id_producto']; ?>"
+                                                        <?php echo ($prod['id_producto'] == $row['id_producto']) ? 'selected' : ''; ?>>
+                                                        <?php echo htmlspecialchars($prod['nombre'] . ' (' . $prod['unidad_medida'] . ')'); ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Orden de Servicio (opcional)</label>
-                                            <select name="id_orden" class="form-control">
-                                                <option value="">Sin orden</option>
-                                                <?php foreach ($ordenes as $o): ?>
-                                                    <option value="<?php echo $o['id_orden']; ?>"
-                                                        <?php echo ($o['id_orden'] == $row['id_orden']) ? 'selected' : ''; ?>>
-                                                        #<?php echo $o['id_orden']; ?> - <?php echo htmlspecialchars($o['cliente']); ?>
+                                            <label>Almacén</label>
+                                            <select name="id_almacen" class="form-control" required>
+                                                <option value="">Seleccione</option>
+                                                <?php foreach ($almacenes as $alm): ?>
+                                                    <option value="<?php echo $alm['id_almacen']; ?>"
+                                                        <?php echo ($alm['id_almacen'] == $row['id_almacen']) ? 'selected' : ''; ?>>
+                                                        <?php echo htmlspecialchars($alm['nombre']); ?>
                                                     </option>
                                                 <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label>Tipo</label>
-                                            <select name="tipo" class="form-control" required>
-                                                <option value="entrada" <?php echo ($row['tipo'] == 'entrada') ? 'selected' : ''; ?>>Entrada</option>
-                                                <option value="salida" <?php echo ($row['tipo'] == 'salida') ? 'selected' : ''; ?>>Salida</option>
-                                                <option value="ajuste" <?php echo ($row['tipo'] == 'ajuste') ? 'selected' : ''; ?>>Ajuste</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
@@ -200,11 +199,11 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                                                 required>
                                         </div>
                                         <div class="mb-3">
-                                            <label>Fecha</label>
+                                            <label>Fecha de Actualización</label>
                                             <input type="date"
-                                                name="fecha"
+                                                name="fecha_actualizacion"
                                                 class="form-control"
-                                                value="<?php echo $row['fecha']; ?>"
+                                                value="<?php echo $row['fecha_actualizacion']; ?>"
                                                 required>
                                         </div>
                                         <div class="modal-footer">
@@ -221,7 +220,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                         </div>
                     </div>
                     <div class="modal fade"
-                        id="modalEliminar<?php echo $row['id_movimiento']; ?>"
+                        id="modalEliminar<?php echo $row['id_stock']; ?>"
                         tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -230,17 +229,17 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <p>¿Desea eliminar el movimiento?</p>
-                                    <h5 style="color: black;">Movimiento #<?php echo $row['id_movimiento']; ?></h5>
+                                    <p>¿Desea eliminar el stock?</p>
+                                    <h5 style="color: black;"><?php echo htmlspecialchars($row['producto']); ?> — <?php echo htmlspecialchars($row['almacen']); ?></h5>
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="../controllers/eliminar_movimiento.php" method="POST">
+                                    <form action="../controllers/eliminar_stock.php" method="POST">
                                         <input type="hidden"
                                             name="csrf_token"
                                             value="<?php echo $_SESSION['csrf_token']; ?>">
                                         <input type="hidden"
-                                            name="id_movimiento"
-                                            value="<?php echo $row['id_movimiento']; ?>">
+                                            name="id_stock"
+                                            value="<?php echo $row['id_stock']; ?>">
                                         <button type="submit" class="btn btn-danger">
                                             Sí, eliminar
                                         </button>
@@ -262,14 +261,14 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
         <?php if ($pagina > 1): ?>
             <a class="pagination-previous"
                 style="color:black; text-decoration:none;"
-                href="<?php echo $basePage; ?>.php?vista=movimiento&pagina=<?php echo $pagina - 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                href="<?php echo $basePage; ?>.php?vista=stock&pagina=<?php echo $pagina - 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
                 Anterior
             </a>
         <?php endif; ?>
         <?php if ($pagina < $totalPaginas): ?>
             <a class="pagination-next"
                 style="color:black; text-decoration:none;"
-                href="<?php echo $basePage; ?>.php?vista=movimiento&pagina=<?php echo $pagina + 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                href="<?php echo $basePage; ?>.php?vista=stock&pagina=<?php echo $pagina + 1; ?>&limite=<?php echo $registrosPorPagina; ?>">
                 Siguiente
             </a>
         <?php endif; ?>
@@ -278,7 +277,7 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                 <li>
                     <a class="pagination-link <?php echo ($i == $pagina) ? 'is-current' : ''; ?>"
                         style="color:black; text-decoration: none;"
-                        href="<?php echo $basePage; ?>.php?vista=movimiento&pagina=<?php echo $i; ?>&limite=<?php echo $registrosPorPagina; ?>">
+                        href="<?php echo $basePage; ?>.php?vista=stock&pagina=<?php echo $i; ?>&limite=<?php echo $registrosPorPagina; ?>">
                         <?php echo $i; ?>
                     </a>
                 </li>
@@ -292,39 +291,31 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" style="color:black;">Agregar Movimiento</h5>
+                <h5 class="modal-title" style="color:black;">Agregar Stock</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form action="../controllers/agregar_movimiento.php" method="POST">
+                <form action="../controllers/agregar_stock.php" method="POST">
                     <div class="mb-3">
-                        <label>Stock (Producto - Almacén)</label>
-                        <select name="id_stock" class="form-control" required>
+                        <label>Producto</label>
+                        <select name="id_producto" class="form-control" required>
                             <option value="">Seleccione</option>
-                            <?php foreach ($stockItems as $st): ?>
-                                <option value="<?php echo $st['id_stock']; ?>">
-                                    <?php echo htmlspecialchars($st['producto'] . ' - ' . $st['almacen']); ?>
+                            <?php foreach ($productos as $prod): ?>
+                                <option value="<?php echo $prod['id_producto']; ?>">
+                                    <?php echo htmlspecialchars($prod['nombre'] . ' (' . $prod['unidad_medida'] . ')'); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label>Orden de Servicio (opcional)</label>
-                        <select name="id_orden" class="form-control">
-                            <option value="">Sin orden</option>
-                            <?php foreach ($ordenes as $o): ?>
-                                <option value="<?php echo $o['id_orden']; ?>">
-                                    #<?php echo $o['id_orden']; ?> - <?php echo htmlspecialchars($o['cliente']); ?>
+                        <label>Almacén</label>
+                        <select name="id_almacen" class="form-control" required>
+                            <option value="">Seleccione</option>
+                            <?php foreach ($almacenes as $alm): ?>
+                                <option value="<?php echo $alm['id_almacen']; ?>">
+                                    <?php echo htmlspecialchars($alm['nombre']); ?>
                                 </option>
                             <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label>Tipo</label>
-                        <select name="tipo" class="form-control" required>
-                            <option value="entrada">Entrada</option>
-                            <option value="salida">Salida</option>
-                            <option value="ajuste">Ajuste</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -335,15 +326,15 @@ $totalPaginas = ceil($totalRegistros / $registrosPorPagina);
                             required>
                     </div>
                     <div class="mb-3">
-                        <label>Fecha</label>
+                        <label>Fecha de Actualización</label>
                         <input type="date"
-                            name="fecha"
+                            name="fecha_actualizacion"
                             class="form-control"
                             required>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">
-                            Guardar Movimiento
+                            Guardar Stock
                         </button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                             Cerrar
